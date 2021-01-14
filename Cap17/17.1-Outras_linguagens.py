@@ -3,7 +3,7 @@ import pygal
 from pygal.style import LightColorizedStyle as LCS, LightenStyle as LS
 
 # Faz uma chamada de API e armazena a resposta.
-url = 'https://api.github.com/search/repositories?q=language:python&sort=stars'
+url = 'https://api.github.com/search/repositories?q=language:javascript&sort=stars'
 r = requests.get(url)
 print("Status code: ", r.status_code)
 
@@ -21,15 +21,16 @@ for repo_dict in repo_dicts:
     plot_dict = {
         'value': repo_dict['stargazers_count'],
         'label': str(repo_dict['description']),
-        'xlink': repo_dict['html_url'],
+        'xlink': repo_dict['html_url']
     }
     plot_dicts.append(plot_dict)
 
-# Cria a visualização.
-my_style = LS('#333366', base_style=LCS)
+# Cria a visualização do gráfico.
+my_style = LS('#993333', base_style=LCS)
 
 my_config = pygal.Config()
 my_config.force_uri_protocol = 'http'
+
 my_config.x_label_rotation = 45
 my_config.show_legend = False
 my_config.title_font_size = 24
@@ -40,9 +41,8 @@ my_config.show_y_guides = False
 my_config.width = 1000
 
 chart = pygal.Bar(my_config, style=my_style)
-
-chart.title = 'Most-Starred Python Projects on GitHub'
+chart.title = 'Most-Starred JavaScripts Projects on GitHub'
 chart.x_labels = names
 
 chart.add('', plot_dicts)
-chart.render_to_file('python_repos.svg')
+chart.render_to_file("17.1-Outras_linguagens.svg")
